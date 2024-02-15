@@ -9,7 +9,7 @@
             result-class="com.example.firstproject.entity.Comment">
         <query>
             <![CDATA[
-                SELECT * FROM Comment WHERE nickname = :nickname
+                    SELECT * FROM comment WHERE nickname = :nickname
             ]]>
         </query>
     </named-native-query>
