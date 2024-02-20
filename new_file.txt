@@ -1,1 +1,2 @@
 Hello, Git Flow
+Fixed bug
