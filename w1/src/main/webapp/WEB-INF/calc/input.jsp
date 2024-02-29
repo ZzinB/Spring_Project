@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="calcResult.jsp", method="post">  <!--action, method 속성 추가-->
+<form action="/calc/makeResult", method="post">  <!--action, method 속성 추가-->
   <input type="number" name="num1">
   <input type="number" name="num2">
   <button type="submit">SEND</button>
