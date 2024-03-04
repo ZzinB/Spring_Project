@@ -23,6 +23,7 @@ public class TodoDAO {
         return now;
     }
 
+    //lombok @Cleanup
     public String getTime2() throws Exception{
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
         @Cleanup PreparedStatement preparedStatement = connection.prepareStatement("select now()");
