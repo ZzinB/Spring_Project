@@ -2,12 +2,15 @@ package org.zerock.jdbcex.dao;
 
 import lombok.Cleanup;
 import lombok.Data;
+import org.checkerframework.checker.units.qual.C;
 import org.zerock.jdbcex.domain.TodoVO;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TodoDAO {
     public String getTime(){
@@ -49,5 +52,27 @@ public class TodoDAO {
         preparedStatement.setBoolean(3, vo.isFinished());
 
         preparedStatement.executeUpdate();
+    }
+
+    public List<TodoVO> selectAll() throws Exception{
+        String sql = "select * from tbl_todo";
+
+        @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        @Cleanup ResultSet resultSet = preparedStatement.executeQuery();
+
+        List<TodoVO> list = new ArrayList<>();
+
+        while(resultSet.next()){
+            TodoVO vo = TodoVO.builder()
+                    .tno(resultSet.getLong("tno"))
+                    .title(resultSet.getString("title"))
+                    .dueDate(resultSet.getDate("dueDate").toLocalDate())
+                    .finished(resultSet.getBoolean("finished"))
+                    .build();
+
+            list.add(vo);
+        }
+        return list;
     }
 }
