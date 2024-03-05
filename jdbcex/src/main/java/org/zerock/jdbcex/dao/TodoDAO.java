@@ -76,7 +76,7 @@ public class TodoDAO {
         return list;
     }
 
-    public TodoVO selectOne(Long tno) throws Exception{
+    public TodoVO selectOne(Long tno) throws Exception {
         String sql = "select * from tbl_todo where tno = ?";
 
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
@@ -87,13 +87,40 @@ public class TodoDAO {
         @Cleanup ResultSet resultSet = preparedStatement.executeQuery();
 
         resultSet.next();
-        TodoVO vo = TodoVO.builder()
-                .tno(resultSet.getLong("tno"))
-                .title(resultSet.getString("title"))
-                .dueDate(resultSet.getDate("dueDate").toLocalDate())
-                .finished(resultSet.getBoolean("finished"))
-                .build();
+        if (resultSet.next()) {
+            TodoVO vo = TodoVO.builder()
+                    .tno(resultSet.getLong("tno"))
+                    .title(resultSet.getString("title"))
+                    .dueDate(resultSet.getDate("dueDate").toLocalDate())
+                    .finished(resultSet.getBoolean("finished"))
+                    .build();
+            return vo;
+        } else {
+            return null;
+        }
+    }
 
-        return vo;
+    public void deleteOne(Long tno) throws Exception{
+        String sql = "delete from tbl_todo where tno = ?";
+
+        @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+        preparedStatement.setLong(1, tno);
+        preparedStatement.executeUpdate();
+    }
+
+    public void updateOne(TodoVO todoVO) throws  Exception{
+        String sql = "update tbl_todo set title = ?, dueDate = ?, finished =  ? where tno = ?";
+
+        @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+        preparedStatement.setString(1, todoVO.getTitle());
+        preparedStatement.setDate(2, Date.valueOf(todoVO.getDueDate()));
+        preparedStatement.setBoolean(3, todoVO.isFinished());
+        preparedStatement.setLong(4, todoVO.getTno());
+
+        preparedStatement.executeUpdate();
     }
 }
