@@ -50,6 +50,9 @@ dependencies {
 
     testCompileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
     testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
+
+    //JSTL
+    implementation group: 'jstl', name: 'jstl', version: '1.2'
 }
 
 test {
