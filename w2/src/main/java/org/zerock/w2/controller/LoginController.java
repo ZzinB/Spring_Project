@@ -1,4 +1,4 @@
-package org.zerock.jdbcex.controller;
+package org.zerock.w2.controller;
 
 import lombok.extern.java.Log;
 
