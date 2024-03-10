@@ -2,12 +2,11 @@ package org.zerock.dao;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.zerock.jdbcex.dao.TodoDAO;
-import org.zerock.jdbcex.domain.TodoVO;
+import org.zerock.w2.dao.TodoDAO;
+import org.zerock.w2.domain.TodoVO;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 
