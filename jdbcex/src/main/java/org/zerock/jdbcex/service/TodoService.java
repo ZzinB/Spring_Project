@@ -22,23 +22,34 @@ public enum TodoService {
         modelMapper = MapperUtil.INSTANCE.get();
     }
 
-    //TodoDTO를 파라미터로 받아서 TodoVO로 변환하는 과정
-    public void register(TodoDTO todoDTO) throws Exception{
-        TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class);
-        //System.out.println("todoVO = " + todoVO);
-        log.info(todoVO);
-        dao.insert(todoVO);
-    }
+    public void register(TodoDTO todoDTO)throws Exception{
 
-    public List<TodoDTO> listAll() throws Exception{
+        TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class);
+
+        //System.out.println("todoVO: " + todoVO);
+        log.info(todoVO);
+
+        dao.insert(todoVO); //int 를 반환하므로 이를 이용해서 예외처리도 가능
+    }
+    public List<TodoDTO> listAll()throws Exception {
+
         List<TodoVO> voList = dao.selectAll();
-        log.info("voList ..........");
+
+        log.info("voList.................");
         log.info(voList);
 
         List<TodoDTO> dtoList = voList.stream()
-                .map(vo -> modelMapper.map(vo, TodoDTO.class))
+                .map(vo -> modelMapper.map(vo,TodoDTO.class))
                 .collect(Collectors.toList());
 
         return dtoList;
+    }
+
+    public TodoDTO get(Long tno)throws Exception {
+
+        log.info("tno: " + tno);
+        TodoVO todoVO = dao.selectOne(tno);
+        TodoDTO todoDTO = modelMapper.map(todoVO, TodoDTO.class);
+        return todoDTO;
     }
 }
