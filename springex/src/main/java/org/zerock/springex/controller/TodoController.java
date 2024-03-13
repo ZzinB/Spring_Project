@@ -23,6 +23,8 @@ public class TodoController {
     @RequestMapping("/list")
     public void list(Model model){
         log.info("todo list ...");
+        model.addAttribute("dtoList", todoService.getAll());
+
     }
 
     //@RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -47,4 +49,13 @@ public class TodoController {
 
         return "redirect:/todo/list";
     }
+
+    @GetMapping("/read")
+    public void read(Long tno, Model model){
+        TodoDTO todoDTO = todoService.getOne(tno);
+        log.info(todoDTO);
+
+        model.addAttribute("dto", todoDTO);
+    }
+
 }
