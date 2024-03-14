@@ -1,4 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -37,6 +39,37 @@
     </div>
     <!-- header end -->
     <!-- 기존의 <h1>Header</h1>끝 -->
+    <div class="row content">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Search </h5>
+            <form action="/todo/list" method="get">
+              <input type="hidden" name="size" value="${pageRequestDTO.size}">
+              <div class="mb-3">
+                <input type="checkbox" name="finished" ${pageRequestDTO.finished?"checked":""} >완료여부
+              </div>
+              <div class="mb-3">
+                <input type="checkbox" name="types" value="t" ${pageRequestDTO.checkType("t")?"checked":""}>제목
+                <input type="checkbox" name="types" value="w"  ${pageRequestDTO.checkType("w")?"checked":""}>작성자
+                <input type="text"  name="keyword" class="form-control" value ='<c:out value="${pageRequestDTO.keyword}"/>' >
+              </div>
+              <div class="input-group mb-3 dueDateDiv">
+                <input type="date" name="from" class="form-control" value="${pageRequestDTO.from}">
+                <input type="date" name="to" class="form-control"  value="${pageRequestDTO.to}">
+              </div>
+              <div class="input-group mb-3">
+                <div class="float-end">
+                  <button class="btn btn-primary" type="submit">Search</button>
+                  <button class="btn btn-info clearBtn" type="reset">Clear</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
     <div class="row content">
       <div class="col">
@@ -59,17 +92,22 @@
               <tbody>
               <c:forEach items="${responseDTO.dtoList}" var="dto">
                 <tr>
-                  <th scope="row"><c:out value="${dto.tno}"/> </th>
-                  <td><a href="/todo/read?tno=${dto.tno}&${pageRequestDTO.link}" class="text-decoration-none" data-tno="${dto.tno}">
-                    <c:out value="${dto.title}"/>
-                  </a>
+                  <th scope="row"><c:out value="${dto.tno}"/></th>
+                  <td>
+                    <a href="/todo/read?tno=${dto.tno}&${pageRequestDTO.link}" class="text-decoration-none" data-tno="${dto.tno}" >
+                      <c:out value="${dto.title}"/>
+                    </a>
                   </td>
-                  <td><c:out value="${dto.writer}"/> </td>
-                  <td><c:out value="${dto.dueDate}"/> </td>
-                  <td><c:out value="${dto.finished}"/> </td>
+                  <td><c:out value="${dto.writer}"/></td>
+                  <td><c:out value="${dto.dueDate}"/></td>
+                  <td><c:out value="${dto.finished}"/></td>
                 </tr>
               </c:forEach>
+
+
               </tbody>
+            </table>
+
             </table>
 
             <div class="float-end">
@@ -81,43 +119,76 @@
                 </c:if>
 
                 <c:forEach begin="${responseDTO.start}" end="${responseDTO.end}" var="num">
-                  <li class="page-item ${responseDTO.page == num? "active":""}"><a class="page-link" href="#">${num}</a> </li>
+                  <li class="page-item ${responseDTO.page == num? "active":""} ">
+                    <a class="page-link"  data-num="${num}">${num}</a></li>
                 </c:forEach>
 
                 <c:if test="${responseDTO.next}">
                   <li class="page-item">
-                    <a class="page-link" data-num="${responseDTO.end +1}">Next</a>
+                    <a class="page-link"  data-num="${responseDTO.end + 1}">Next</a>
                   </li>
                 </c:if>
               </ul>
+
             </div>
 
             <script>
+
+              /* document.querySelector(".pagination").addEventListener("click", function (e) {
+                      e.preventDefault()
+                      e.stopPropagation()
+
+                      const target = e.target
+
+
+                      if(target.tagName !== 'A') {
+                          return
+                      }
+                      const num = target.getAttribute("data-num")
+
+                      self.location = `/todo/list?page=\${num}` //백틱(` `)을 이용해서 템플릿 처리
+                  },false)*/
+
               document.querySelector(".pagination").addEventListener("click", function (e) {
                 e.preventDefault()
                 e.stopPropagation()
 
                 const target = e.target
 
-
                 if(target.tagName !== 'A') {
                   return
                 }
                 const num = target.getAttribute("data-num")
 
-                self.location = `/todo/list?page=\${num}`
+                const formObj = document.querySelector("form")
+
+                formObj.innerHTML += `<input type='hidden' name='page' value='\${num}'>`
+
+                formObj.submit();
+
               },false)
+
+
+
+              document.querySelector(".clearBtn").addEventListener("click", function (e){
+                e.preventDefault()
+                e.stopPropagation()
+
+                self.location ='/todo/list'
+
+              },false)
+
+
             </script>
 
           </div>
+
         </div>
       </div>
     </div>
 
   </div>
   <div class="row content">
-
-    <h1>Content</h1>
   </div>
   <div class="row footer">
     <!--<h1>Footer</h1>-->
