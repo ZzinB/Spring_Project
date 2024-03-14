@@ -19,7 +19,14 @@ https://myste-leee.tistory.com/199
 
 ### springex
 - 로그인(세션과 필터, 쿠키)
-- 
+- Spring
+- Mybtis
+- Spring MVC
+- 페이징 처리
+- 검색/펄터링
+
+### b01
+- Spring Boot
 
 . . .
 - 큰 프로젝트로 점차 나아가는중 
