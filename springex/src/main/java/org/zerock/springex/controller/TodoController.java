@@ -13,6 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.springex.dto.TodoDTO;
 import org.zerock.springex.service.TodoService;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/todo")
 @Log4j2
@@ -65,6 +67,20 @@ public class TodoController {
 
         todoService.remove(tno);
 
+        return "redirect:/todo/list";
+    }
+
+    @PostMapping("/modify")
+    public String modify(@Valid TodoDTO todoDTO,
+                         BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes){
+        if(bindingResult.hasErrors()){
+            log.info("has error .....");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            return "redirect:/todo/modify";
+        }
+        log.info(todoDTO);
+        todoService.modify(todoDTO);
         return "redirect:/todo/list";
     }
 
