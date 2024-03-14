@@ -4,6 +4,10 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.zerock.b01.domain.Board;
 
 import javax.swing.text.html.Option;
@@ -64,5 +68,12 @@ public class BoardRepositoryTests {
         Long bno = 1L;
 
         boardRepository.deleteById(bno);
+    }
+
+    @Test
+    public void testPaging(){
+        //1. page order by bno desc
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
+        Page<Board> result = boardRepository.findAll(pageable);
     }
 }
