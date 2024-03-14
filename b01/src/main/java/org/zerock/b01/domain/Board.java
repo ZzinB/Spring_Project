@@ -1,6 +1,6 @@
 package org.zerock.b01.domain;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 @Entity
