@@ -1,8 +1,10 @@
 # 개인 학습 프로젝트 
 
-### CRUD
+## CRUD 프로젝트
 - 간단한 CRUD 프로젝트
 
+
+## Todo 프로젝트
 ### w1
 - 자바 웹 환경 구성 (WAS: Tomcat)
 - 서블릿과 JSP로 구현한 Todo
@@ -27,6 +29,9 @@ https://myste-leee.tistory.com/199
 
 ### b01
 - Spring Boot
+- Thymeleaf
+- Spring Data JPA
+- Querydsl을 이용한 동적 쿼리
 
 . . .
 - 큰 프로젝트로 점차 나아가는중 
