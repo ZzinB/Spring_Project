@@ -62,6 +62,9 @@ dependencies {
     //DTO와 엔티티 간의 변환 처리 : ModelMapper
     implementation 'org.modelmapper:modelmapper:3.1.0'
 
+    //Thymeleaf
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
+
 }
 
 tasks.named('test') {
