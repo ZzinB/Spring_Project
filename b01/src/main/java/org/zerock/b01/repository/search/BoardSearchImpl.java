@@ -19,7 +19,12 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         QBoard board = QBoard.board;  //Q도메인 객체
         JPQLQuery<Board> query = from(board);  //select ..from board
         query.where(board.title.contains("1"));  //where title like ..
+
+        //paging
+        this.getQuerydsl().applyPagination(pageable, query); //limit ..
+
         List<Board> list = query.fetch();  //fetch() : JPQLQuery 실행
+
         long count = query.fetchCount();
 
         return null;
