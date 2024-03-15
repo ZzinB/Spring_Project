@@ -9,6 +9,7 @@ import org.zerock.b01.dto.BoardDTO;
 import org.zerock.b01.repository.BoardRepository;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Log4j2
@@ -27,5 +28,16 @@ public class BoardServiceImpl implements BoardService{
         Long bno = boardRepository.save(board).getBno();
 
         return bno;
+    }
+
+    @Override
+    public BoardDTO readOne(Long bno) {
+        Optional<Board> result = boardRepository.findById(bno);
+
+        Board board = result.orElseThrow();
+
+        BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
+
+        return boardDTO;
     }
 }
