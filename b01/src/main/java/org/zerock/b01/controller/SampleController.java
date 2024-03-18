@@ -13,6 +13,7 @@ import java.util.List;
 @Log4j2
 public class SampleController {
 
+
     @GetMapping("/hello")
     public void hello(Model model){
         log.info("hello .....");
