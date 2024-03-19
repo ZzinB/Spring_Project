@@ -11,6 +11,8 @@ import org.springframework.data.domain.Sort;
 import org.zerock.b01.domain.Board;
 import org.zerock.b01.domain.Reply;
 
+import javax.transaction.Transactional;
+
 @SpringBootTest
 @Log4j2
 class ReplyRepositoryTest {
@@ -33,6 +35,7 @@ class ReplyRepositoryTest {
         replyRepository.save(reply);
     }
 
+    @Transactional
     @Test
     public void testBoardReplies(){
         Long bno = 201L;
