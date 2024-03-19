@@ -32,6 +32,7 @@ https://myste-leee.tistory.com/199
 - Thymeleaf
 - Spring Data JPA
 - Querydsl을 이용한 동적 쿼리
+- Swagger
 
 . . .
 - 큰 프로젝트로 점차 나아가는중 
