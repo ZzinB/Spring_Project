@@ -116,5 +116,7 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 
         return new PageImpl<>(dtoList, pageable, count);
     }
+
+
 }
 
