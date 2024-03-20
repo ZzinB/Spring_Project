@@ -2,6 +2,7 @@ package org.zerock.b01.controller.advice;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -49,7 +50,8 @@ public class CustomRestAdvice {
     }
 
     //특정 번호를 이용해 조회할 때 해당 데이터가 존재하지 않을 경우
-    @ExceptionHandler(NoSuchElementException.class)
+    //존재하지 않는 번호 삭제
+    @ExceptionHandler({NoSuchElementException.class, EmptyResultDataAccessException.class})
     @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
     public ResponseEntity<Map<String, String>> handleNoSuchElement(Exception e){
         log.error(e);
@@ -60,4 +62,5 @@ public class CustomRestAdvice {
         errorMap.put("msg", "No Such Element Exception");
         return ResponseEntity.badRequest().body(errorMap);
     }
+
 }
