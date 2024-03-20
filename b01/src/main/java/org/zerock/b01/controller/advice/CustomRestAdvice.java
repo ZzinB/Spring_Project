@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 @Log4j2
@@ -44,6 +45,19 @@ public class CustomRestAdvice {
 
         errorMap.put("time", ""+System.currentTimeMillis());
         errorMap.put("msg", "constraint fails");
+        return ResponseEntity.badRequest().body(errorMap);
+    }
+
+    //특정 번호를 이용해 조회할 때 해당 데이터가 존재하지 않을 경우
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
+    public ResponseEntity<Map<String, String>> handleNoSuchElement(Exception e){
+        log.error(e);
+
+        Map<String, String> errorMap = new HashMap<>();
+
+        errorMap.put("time", ""+System.currentTimeMillis());
+        errorMap.put("msg", "No Such Element Exception");
         return ResponseEntity.badRequest().body(errorMap);
     }
 }
