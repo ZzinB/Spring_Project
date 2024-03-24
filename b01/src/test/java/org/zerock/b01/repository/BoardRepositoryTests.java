@@ -26,6 +26,9 @@ public class BoardRepositoryTests {
     @Autowired
     private BoardRepository boardRepository;
 
+    @Autowired
+    private ReplyRepository replyRepository;
+
     //저장
     @Test
     public void testInsert(){
@@ -190,5 +193,17 @@ public class BoardRepositoryTests {
             board.addImage(UUID.randomUUID().toString(), "updatefile" + i + ".jpg");
         }
         boardRepository.save(board);
+    }
+
+    //게시글 삭제
+    @Test
+    @Transactional
+    @Commit
+    public void testRemoveAll(){
+        Long bno = 1L;
+        //Reply엔티티 삭제 먼저 하고
+        replyRepository.deleteByBoard_Bno(bno);
+        //그 후 Board 삭제
+        boardRepository.deleteById(bno);
     }
 }
