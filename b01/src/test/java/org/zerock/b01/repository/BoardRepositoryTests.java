@@ -8,11 +8,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 import org.zerock.b01.domain.Board;
 import org.zerock.b01.domain.BoardImage;
 import org.zerock.b01.dto.BoardListReplyCountDTO;
 
 import javax.swing.text.html.Option;
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.IntStream;
@@ -172,5 +174,21 @@ public class BoardRepositoryTests {
         for (BoardImage boardImage : board.getImageSet()){
             log.info(boardImage);
         }
+    }
+
+    //특정 게시물의 첨부파일을 다른 파일로 수정
+    @Transactional
+    @Commit
+    @Test
+    public void testModifyImages(){
+        Optional<Board> result = boardRepository.findByIdWithImages(1L);
+        Board board = result.orElseThrow();
+        //기존의 첨부파일들은 삭제
+        board.clearImage();
+        //새로운 첨부파일
+        for (int i=0 ; i<2 ; i++){
+            board.addImage(UUID.randomUUID().toString(), "updatefile" + i + ".jpg");
+        }
+        boardRepository.save(board);
     }
 }
