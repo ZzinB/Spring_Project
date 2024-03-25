@@ -2,6 +2,7 @@ package org.zerock.b01.domain;
 
 import javax.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,6 +39,7 @@ public class Board extends BaseEntity{
             fetch = FetchType.LAZY,
             orphanRemoval = true)    //상위 엔티티의 상태 변화 (삭제) 하위 엔티티 삭제까지 진행시켜!
     @Builder.Default
+    @BatchSize(size = 20)  //N+1 문제 해결 : batchsize
     private Set<BoardImage> imageSet = new HashSet<>();
 
 
