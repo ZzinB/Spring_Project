@@ -45,6 +45,9 @@ class BoardServiceImplTest {
                 .content("Updated content 101 ..")
                 .build();
 
+        //첨부파일 추가
+        boardDTO.setFileNames(Arrays.asList(UUID.randomUUID() + "_zzz.jpg"));
+
         boardService.modify(boardDTO);
     }
 
