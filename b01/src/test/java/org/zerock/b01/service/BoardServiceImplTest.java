@@ -4,10 +4,12 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.zerock.b01.dto.BoardDTO;
 import org.zerock.b01.dto.PageRequestDTO;
 import org.zerock.b01.dto.PageResponseDTO;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
@@ -49,6 +51,12 @@ class BoardServiceImplTest {
         boardDTO.setFileNames(Arrays.asList(UUID.randomUUID() + "_zzz.jpg"));
 
         boardService.modify(boardDTO);
+    }
+
+    @Test
+    public void testRemoveAll(){
+        Long bno = 1L;
+        boardService.remove(bno);
     }
 
     @Test
