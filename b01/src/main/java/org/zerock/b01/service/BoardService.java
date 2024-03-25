@@ -3,6 +3,9 @@ package org.zerock.b01.service;
 import org.zerock.b01.domain.Board;
 import org.zerock.b01.dto.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public interface BoardService {
     Long register(BoardDTO boardDTO);
 
@@ -37,5 +40,23 @@ public interface BoardService {
             });
         }
         return board;
+    }
+
+    //Board엔티티 객체를 BoardDTO로 변환
+    default BoardDTO entityToDTO(Board board){
+        BoardDTO boardDTO = BoardDTO.builder()
+                .bno(board.getBno())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .writer(board.getWriter())
+                .regDate(board.getRegDate())
+                .modDate(board.getModDate())
+                .build();
+
+        List<String> fileNames = board.getImageSet().stream().sorted().map(boardImage ->
+                boardImage.getUuid() + "_" + boardImage.getFileName()).collect(Collectors.toList());
+
+        boardDTO.setFileNames(fileNames);
+        return boardDTO;
     }
 }
