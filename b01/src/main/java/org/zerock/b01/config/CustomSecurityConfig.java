@@ -17,13 +17,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableGlobalMethodSecurity(prePostEnabled = true)  //권한 설정
 public class CustomSecurityConfig {
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        log.info("------------configure----------");
-        http.formLogin();
-        return http.build();
-    }
-
     //정적 자원에 시큐리티 적용 제외
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){
@@ -34,5 +27,13 @@ public class CustomSecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+        log.info("------------configure----------");
+        http.formLogin().loginPage("/member/login");
+        http.csrf().disable();  //CSRF토큰 비활성화
+        return http.build();
     }
 }
