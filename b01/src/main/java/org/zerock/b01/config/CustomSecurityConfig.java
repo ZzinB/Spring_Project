@@ -12,65 +12,80 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.zerock.b01.security.CustomUserDetailsService;
-import org.zerock.b01.security.handler.Custim403Handler;
+import org.zerock.b01.security.handler.Custom403Handler;
+import org.zerock.b01.security.handler.CustomSocialLoginSuccessHandler;
 
 import javax.sql.DataSource;
 
 @Log4j2
 @Configuration
 @RequiredArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true)  //권한 설정
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+
 public class CustomSecurityConfig {
 
     private final DataSource dataSource;
     private final CustomUserDetailsService userDetailsService;
 
-    //정적 자원에 시큐리티 적용 제외
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer(){
-        log.info("---------web configure----------");
-        return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        log.info("------------configure----------");
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new CustomSocialLoginSuccessHandler(passwordEncoder());
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        log.info("------------configure-------------------");
+
         //커스텀 로그인 페이지
         http.formLogin().loginPage("/member/login");
-        //CSRF토큰 비활성화
+        //CSRF 토큰 비활성화
         http.csrf().disable();
 
-        //자동 로그인
         http.rememberMe()
                 .key("12345678")
                 .tokenRepository(persistentTokenRepository())
                 .userDetailsService(userDetailsService)
                 .tokenValiditySeconds(60*60*24*30);
 
-        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());  //403 error
+        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler()); //403
 
-        http.oauth2Login().loginPage("/member/login");
+        http.oauth2Login().loginPage("/member/login").successHandler(authenticationSuccessHandler());
 
         return http.build();
     }
 
-    @Bean
-    public AccessDeniedHandler accessDeniedHandler(){
-        return new Custim403Handler();
-    }
+
+
 
     @Bean
-    public PersistentTokenRepository persistentTokenRepository(){
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new Custom403Handler();
+    }
+
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+
+        log.info("------------web configure-------------------");
+
+        return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+
+    }
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
         repo.setDataSource(dataSource);
         return repo;
     }
+
 }

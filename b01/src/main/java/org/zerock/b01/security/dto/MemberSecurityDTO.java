@@ -1,5 +1,6 @@
 package org.zerock.b01.security.dto;
 
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,25 +15,28 @@ import java.util.Map;
 @Setter
 @ToString
 public class MemberSecurityDTO extends User implements OAuth2User {
+
     private String mid;
     private String mpw;
     private String email;
     private boolean del;
     private boolean social;
 
-    private Map<String, Object> props; // 소셜 로그인 정보
+    private Map<String, Object> props; //소셜 로그인 정보
 
-    public MemberSecurityDTO(String username, String password, String email, boolean del, boolean social, Collection<? extends GrantedAuthority> authorities ) {
+    public MemberSecurityDTO(String username, String password, String email, boolean del, boolean social,
+                             Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
-        this.mid = mid;
-        this.mpw = mpw;
+
+        this.mid = username;
+        this.mpw = password;
         this.email = email;
         this.del = del;
         this.social = social;
+
     }
 
-    @Override
-    public Map<String, Object> getAttributes(){
+    public Map<String, Object> getAttributes() {
         return this.getProps();
     }
 
@@ -40,4 +44,5 @@ public class MemberSecurityDTO extends User implements OAuth2User {
     public String getName() {
         return this.mid;
     }
+
 }
