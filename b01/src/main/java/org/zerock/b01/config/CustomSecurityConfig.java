@@ -57,6 +57,8 @@ public class CustomSecurityConfig {
 
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());  //403 error
 
+        http.oauth2Login().loginPage("/member/login");
+
         return http.build();
     }
 
