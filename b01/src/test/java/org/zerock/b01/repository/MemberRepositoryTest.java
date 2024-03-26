@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.Commit;
 import org.zerock.b01.domain.Member;
 import org.zerock.b01.domain.MemberRole;
 
@@ -50,6 +51,14 @@ class MemberRepositoryTest {
         log.info(member.getRoleSet());
 
         member.getRoleSet().forEach(memberRole -> log.info(memberRole.name()));
+    }
+
+    @Commit
+    @Test
+    public void testUpdate(){
+        String mid = "메일";
+        String mpw = passwordEncoder.encode("54321");
+        memberRepository.updatePassword(mpw, mid);
     }
 
 
