@@ -85,6 +85,8 @@ public class BoardController {
 //    }
 
 
+
+    @PreAuthorize("isAuthenticated()")  //로그인한 사용자만
     @GetMapping({"/read", "/modify"})
     public void read(Long bno, PageRequestDTO pageRequestDTO, Model model){
 
@@ -96,10 +98,11 @@ public class BoardController {
 
     }
 
+    @PreAuthorize("principal.username == #boardDTO.writer")
     @PostMapping("/modify")
-    public String modify( PageRequestDTO pageRequestDTO,
-                          @Valid BoardDTO boardDTO,
+    public String modify( @Valid BoardDTO boardDTO,
                           BindingResult bindingResult,
+                          PageRequestDTO pageRequestDTO,
                           RedirectAttributes redirectAttributes){
 
         log.info("board modify post......." + boardDTO);
@@ -138,6 +141,8 @@ public class BoardController {
 //        return "redirect:/board/list";
 //
 //    }
+
+    @PreAuthorize("principal.username == #boardDTO.writer")
     @PostMapping("/remove")
     public String remove(BoardDTO boardDTO, RedirectAttributes redirectAttributes) {
 
