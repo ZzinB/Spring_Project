@@ -8,12 +8,13 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 
-public class AccessTokenException extends RuntimeException{
+public class AccessTokenException extends RuntimeException {
+
     TOKEN_ERROR token_error;
 
-    public enum TOKEN_ERROR{
-        UNACCEPT(401, "Token is null or too short"),
-        BADTYPE(401, "Token Type Bearer"),
+    public enum TOKEN_ERROR {
+        UNACCEPT(401,"Token is null or too short"),
+        BADTYPE(401, "Token type Bearer"),
         MALFORM(403, "Malformed Token"),
         BADSIGN(403, "BadSignatured Token"),
         EXPIRED(403, "Expired Token");
@@ -27,11 +28,11 @@ public class AccessTokenException extends RuntimeException{
         }
 
         public int getStatus() {
-            return status;
+            return this.status;
         }
 
         public String getMsg() {
-            return msg;
+            return this.msg;
         }
     }
 
@@ -41,6 +42,7 @@ public class AccessTokenException extends RuntimeException{
     }
 
     public void sendResponseError(HttpServletResponse response){
+
         response.setStatus(token_error.getStatus());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
@@ -50,7 +52,7 @@ public class AccessTokenException extends RuntimeException{
 
         try {
             response.getWriter().println(responseStr);
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

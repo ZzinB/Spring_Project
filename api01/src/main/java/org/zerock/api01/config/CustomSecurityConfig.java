@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.zerock.api01.security.APIUserDetailsService;
 import org.zerock.api01.security.filter.APILoginFilter;
 import org.zerock.api01.security.filter.TokenCheckFilter;
-import org.zerock.api01.security.handle.APILoginSuccessHandler;
+import org.zerock.api01.security.handler.APILoginSuccessHandler;
 import org.zerock.api01.util.JWTUtil;
 
 
@@ -53,6 +53,7 @@ public class CustomSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
+        log.info("------------configure-------------------");
 
         //AutenticationManager 설정
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
@@ -61,7 +62,7 @@ public class CustomSecurityConfig {
                         .passwordEncoder(passwordEncoder());
 
         //Get AuthenticationManager
-        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();;
+        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
 
         http.authenticationManager(authenticationManager);
 
@@ -69,11 +70,11 @@ public class CustomSecurityConfig {
         APILoginFilter apiLoginFilter = new APILoginFilter("/generateToken");
         apiLoginFilter.setAuthenticationManager(authenticationManager);
 
-        //APILoginSuccessHandler
-        APILoginSuccessHandler successHandler = new APILoginSuccessHandler(jwtUtil);
-        //SuccessHandler 세팅
-        apiLoginFilter.setAuthenticationSuccessHandler(successHandler);
-
+//        //APILoginSuccessHandler
+//        APILoginSuccessHandler successHandler = new APILoginSuccessHandler(jwtUtil);
+//        //SuccessHandler 세팅
+//        apiLoginFilter.setAuthenticationSuccessHandler(successHandler);
+//
 
         //api로 시작하는 모든 경로는 TokenCheckFilter 동작
         http.addFilterBefore(tokenCheckFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
