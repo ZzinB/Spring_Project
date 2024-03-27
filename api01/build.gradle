@@ -44,6 +44,8 @@ dependencies {
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
+    //JSON처리 라이브러리
+    implementation 'com.google.code.gson:gson-parent:2.8.9'
 
 
 }
