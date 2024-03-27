@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.zerock.api01.security.APIUserDetailsService;
 import org.zerock.api01.security.filter.APILoginFilter;
 import org.zerock.api01.security.handle.APILoginSuccessHandler;
+import org.zerock.api01.util.JWTUtil;
 
 
 @Configuration
@@ -29,6 +30,9 @@ import org.zerock.api01.security.handle.APILoginSuccessHandler;
 public class CustomSecurityConfig {
 
     private final APIUserDetailsService apiUserDetailsService;
+
+    private final JWTUtil jwtUtil;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -65,8 +69,8 @@ public class CustomSecurityConfig {
         apiLoginFilter.setAuthenticationManager(authenticationManager);
 
         //APILoginSuccessHandler
-        APILoginSuccessHandler successHandler = new APILoginSuccessHandler();
-        //SuccessHandler 실행
+        APILoginSuccessHandler successHandler = new APILoginSuccessHandler(jwtUtil);
+        //SuccessHandler 세팅
         apiLoginFilter.setAuthenticationSuccessHandler(successHandler);
 
 
