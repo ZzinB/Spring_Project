@@ -41,7 +41,7 @@ https://myste-leee.tistory.com/199
 
 ### api01
 - API 서버
-- JWT .............오류 발생중 .... ㅠ
+- JWT
 
 
 . . .
