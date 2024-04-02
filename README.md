@@ -32,7 +32,7 @@
 - Thymeleaf
 - Spring Data JPA
 - Querydsl을 이용한 동적 쿼리
-- Swagger
+- [Swagger](https://myste-leee.tistory.com/205)
 - Ajax
 - 파일 업로드
     - @OneToMany, 다대일
