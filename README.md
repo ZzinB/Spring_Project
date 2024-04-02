@@ -13,8 +13,7 @@
 
 ### w2
 - Mariadb를 사용한 Todo
-- Connection Pool 이용 (HikariCP)<br>
-https://myste-leee.tistory.com/199
+- [Connection Pool 이용 (HikariCP)](https://myste-leee.tistory.com/199)
 - MVC와 JDBC 결합(ModelMapper)
 - log 출력
 
