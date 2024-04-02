@@ -8,7 +8,8 @@
 ### w1
 - 자바 웹 환경 구성 (WAS: Tomcat)
 - 서블릿과 JSP로 구현한 Todo
-- 지속적으로 POST 되는 (새로고침, 이전페이지 이동) 현상을 막기 위한 PRG 패턴<br>
+- [지속적으로 POST 되는 (새로고침, 이전페이지 이동) 현상을 막기 위한 PRG 패턴](https://myste-leee.tistory.com/207)
+  <br>
 
 
 ### w2
