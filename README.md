@@ -23,7 +23,7 @@
 
 
 ### springex
-- - Spring + Mybatis
+- Spring + Mybatis
 - 로그인(세션과 필터, 쿠키)
 - Spring
 - Mybtis
