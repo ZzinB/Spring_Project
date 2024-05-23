@@ -28,7 +28,7 @@
 - Spring
 - Mybtis
 - Spring MVC
-- 페이징 처리
+- [페이징 처리](https://myste-leee.tistory.com/223)
 - 검색/펄터링
 
 ### b01
@@ -36,18 +36,20 @@
 - Spring Boot
 - Thymeleaf
 - Spring Data JPA
-- Querydsl을 이용한 동적 쿼리
+- [Swagger API 명세서(Springfoc)](https://myste-leee.tistory.com/205)
+- [Querydsl을 이용한 동적 쿼리](https://myste-leee.tistory.com/221)
 - [Swagger](https://myste-leee.tistory.com/205)
 - Ajax
 - 파일 업로드
-    - @OneToMany, 다대일
-- N+1문제 : @BatchSize
-- Spring Security
-- 카카오 로그인
+    - [@OneToMany](https://myste-leee.tistory.com/222), [다대일](https://myste-leee.tistory.com/226)
+- [N+1문제 : @BatchSize](https://myste-leee.tistory.com/229)
+- [Spring Security](https://myste-leee.tistory.com/240)
+- [카카오 로그인](https://myste-leee.tistory.com/241)
 
 ### api01
 - API 서버
-- JWT
+- [Swagger API 명세서(Springdoc)](https://myste-leee.tistory.com/249)
+- [JWT](https://myste-leee.tistory.com/242)
 
 
 . . .
